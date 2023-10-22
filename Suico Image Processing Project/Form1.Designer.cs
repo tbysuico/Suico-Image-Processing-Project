@@ -29,10 +29,15 @@ namespace Suico_Image_Processing_Project
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.ogImage = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
             this.open = new System.Windows.Forms.Button();
+            this.imageInfo = new System.Windows.Forms.TextBox();
+            this.colorPalette = new System.Windows.Forms.PictureBox();
+            this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             ((System.ComponentModel.ISupportInitialize)(this.ogImage)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.colorPalette)).BeginInit();
             this.SuspendLayout();
             // 
             // ogImage
@@ -55,7 +60,7 @@ namespace Suico_Image_Processing_Project
             // 
             // open
             // 
-            this.open.Location = new System.Drawing.Point(650, 31);
+            this.open.Location = new System.Drawing.Point(382, 31);
             this.open.Name = "open";
             this.open.Size = new System.Drawing.Size(106, 23);
             this.open.TabIndex = 7;
@@ -63,17 +68,39 @@ namespace Suico_Image_Processing_Project
             this.open.UseVisualStyleBackColor = true;
             this.open.Click += new System.EventHandler(this.open_Click);
             // 
+            // imageInfo
+            // 
+            this.imageInfo.Location = new System.Drawing.Point(34, 325);
+            this.imageInfo.Multiline = true;
+            this.imageInfo.Name = "imageInfo";
+            this.imageInfo.ReadOnly = true;
+            this.imageInfo.Size = new System.Drawing.Size(255, 297);
+            this.imageInfo.TabIndex = 9;
+            this.imageInfo.TabStop = false;
+            this.imageInfo.Text = resources.GetString("imageInfo.Text");
+            // 
+            // colorPalette
+            // 
+            this.colorPalette.Location = new System.Drawing.Point(60, 520);
+            this.colorPalette.Name = "colorPalette";
+            this.colorPalette.Size = new System.Drawing.Size(80, 80);
+            this.colorPalette.TabIndex = 10;
+            this.colorPalette.TabStop = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(525, 658);
+            this.Controls.Add(this.colorPalette);
+            this.Controls.Add(this.imageInfo);
             this.Controls.Add(this.open);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.ogImage);
             this.Name = "Form1";
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.ogImage)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.colorPalette)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -84,6 +111,9 @@ namespace Suico_Image_Processing_Project
         private System.Windows.Forms.PictureBox ogImage;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button open;
+        public System.Windows.Forms.TextBox imageInfo;
+        private System.Windows.Forms.PictureBox colorPalette;
+        private System.Windows.Forms.ColorDialog colorDialog1;
     }
 }
 
