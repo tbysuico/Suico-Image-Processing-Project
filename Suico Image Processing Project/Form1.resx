@@ -117,4 +117,23 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="imageInfo.Text" xml:space="preserve">
+    <value>Manufacturer: Zshoft.pcx ()
+Version:
+Encoding:
+Bits per Pixel:
+Image Dimensions:
+HDPI:
+VDPI:
+Number of Color Planes:
+Bytes per Line:
+Palette Information:
+Horizontal Screen Size:
+Vertical Screen Size:
+
+Color Palette:</value>
+  </data>
+  <metadata name="colorDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
 </root>
