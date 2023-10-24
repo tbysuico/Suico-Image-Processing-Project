@@ -131,7 +131,7 @@ namespace Suico_Image_Processing_Project
             List<byte> pixels = new List<byte>();
             int index = 128;
             byte byteDuplicator = 0;
-            byte runner = 0;
+            byte prefix = 0;
 
             while (index < readPCX.Length) // Iterating through relevant bytes for RLE
             {
@@ -139,27 +139,26 @@ namespace Suico_Image_Processing_Project
 
                 if ((reader & 0xC0) == 0xC0) // Check if 2-bit
                 {
-                    byteDuplicator = readPCX[index++];
-                    runner = (byte)(reader & 0x3F);
+                    byteDuplicator = readPCX[index++]; // Duplicates byte
+                    prefix = (byte)(reader & 0x3F); // Gets the first 2 relevant bytes
                 }
                 else // Check if 1-bit
                 {
-                    byteDuplicator = reader;
-                    runner = 1;
+                    byteDuplicator = reader; // Duplicates byte
+                    prefix = 1;
                 }
-                for (int x = 0; x < runner; x++)
+                for (int x = 0; x < prefix; x++)
                 {
-                    pixels.Add(byteDuplicator);
+                    pixels.Add(byteDuplicator); // Adds byte to pixel list
                 }
             }
 
-            // Constructing image using acquired variables
             for(int i = 0; i < 256 * 256; i++)
             {
-                image_colors[i] = colors[pixels[i]]; // 
-                int y = i / 256;
-                int x = i - (256 * y);
-                temp_image.SetPixel(x, y, image_colors[i]);
+                image_colors[i] = colors[pixels[i]]; // Setting each color for each pixel in image
+                int y = i / 256; // y-coordinate
+                int x = i - (256 * y); // x-coordinate
+                temp_image.SetPixel(x, y, image_colors[i]); // Constructing image using acquired variables for RLE
             }
 
             ogImage.Image = temp_image;
