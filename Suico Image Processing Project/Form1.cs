@@ -169,14 +169,15 @@ namespace Suico_Image_Processing_Project
 
         private void redButton_Click(object sender, EventArgs e) // Function for Red Channel button
         {
-            Bitmap temp_image = (Bitmap)ogImage.Image;
-            Bitmap redChannel = new Bitmap(256, 256);
             histogram.Series.Clear(); // Clears histogram
             histogram.Series.Add("Pixels"); // Re-initializes Pixels series for chart
-            int[] intensity = new int[256];
 
             if (ogImage.Image != null) // Checks if there is an available image to process
             {
+                Bitmap temp_image = (Bitmap)ogImage.Image;
+                Bitmap redChannel = new Bitmap(temp_image);
+                int[] intensity = new int[256];
+
                 for (int x = 0; x < temp_image.Width; x++) // Iterates through all pixels of the image
                 {
                     for (int y = 0; y < temp_image.Height; y++)
@@ -192,6 +193,7 @@ namespace Suico_Image_Processing_Project
                     }
                 }
                 processedImage.Image = redChannel;
+                label2.Text = "Red Channel";
 
                 for (int x = 0; x < 256; x++)
                 {
@@ -207,14 +209,15 @@ namespace Suico_Image_Processing_Project
 
         private void greenButton_Click(object sender, EventArgs e) // Function for Green Channel button
         {
-            Bitmap temp_image = (Bitmap)ogImage.Image;
-            Bitmap greenChannel = new Bitmap(256, 256);
             histogram.Series.Clear(); // Clears histogram
             histogram.Series.Add("Pixels"); // Re-initializes Pixels series for chart
-            int[] intensity = new int[256];
 
             if (ogImage.Image != null) // Check
             {
+                Bitmap temp_image = (Bitmap)ogImage.Image;
+                Bitmap greenChannel = new Bitmap(temp_image);
+                int[] intensity = new int[256];
+
                 for (int x = 0; x < temp_image.Width; x++)
                 {
                     for (int y = 0; y < temp_image.Height; y++)
@@ -230,6 +233,7 @@ namespace Suico_Image_Processing_Project
                     }
                 }
                 processedImage.Image = greenChannel;
+                label2.Text = "Green Channel";
 
                 for (int x = 0; x < 256; x++)
                 {
@@ -245,14 +249,15 @@ namespace Suico_Image_Processing_Project
 
         private void blueButton_Click(object sender, EventArgs e) // Function for Blue Channel button
         {
-            Bitmap temp_image = (Bitmap)ogImage.Image;
-            Bitmap blueChannel = new Bitmap(256, 256);
             histogram.Series.Clear(); // Clears histogram
             histogram.Series.Add("Pixels"); // Re-initializes Pixels series for chart
-            int[] intensity = new int[256];
 
             if (ogImage.Image != null)
             {
+                Bitmap temp_image = (Bitmap)ogImage.Image;
+                Bitmap blueChannel = new Bitmap(temp_image);
+                int[] intensity = new int[256];
+
                 for (int x = 0; x < temp_image.Width; x++)
                 {
                     for (int y = 0; y < temp_image.Height; y++)
@@ -268,11 +273,169 @@ namespace Suico_Image_Processing_Project
                     }
                 }
                 processedImage.Image = blueChannel;
+                label2.Text = "Blue Channel";
 
                 for (int x = 0; x < 256; x++)
                 {
                     histogram.Series["Pixels"].Points.AddXY(x, intensity[x]);
                 }
+            }
+            else
+            {
+                string errorMessage = "Please open a pcx file first.";
+                MessageBox.Show(errorMessage);
+            }
+        }
+
+        private void grayButton_Click(object sender, EventArgs e)
+        {
+            histogram.Series.Clear(); // Clears histogram
+            histogram.Series.Add("Pixels"); // Re-initializes Pixels series for chart
+            if (ogImage.Image != null)
+            {
+                Bitmap temp_image = (Bitmap)ogImage.Image;
+                Bitmap grayscale = new Bitmap(temp_image);
+                int[] intensity = new int[256];
+
+                for (int x = 0; x < temp_image.Width; x++)
+                {
+                    for (int y = 0; y < temp_image.Height; y++)
+                    {
+                        Color pixel = temp_image.GetPixel(x, y);
+
+                        int a = pixel.A;
+                        int r = pixel.R;
+                        int g = pixel.G;
+                        int b = pixel.B;
+                        int s = (r + g + b) / 3;
+
+                        intensity[s]++;
+
+                        grayscale.SetPixel(x, y, Color.FromArgb(a, s, s, s));
+                    }
+                }
+                processedImage.Image = grayscale;
+                label2.Text = "Grayscale";
+
+                for (int x = 0; x < 256; x++)
+                {
+                    histogram.Series["Pixels"].Points.AddXY(x, intensity[x]);
+                }
+            }
+            else
+            {
+                string errorMessage = "Please open a pcx file first.";
+                MessageBox.Show(errorMessage);
+            }
+        }
+
+        private void negativeButton_Click(object sender, EventArgs e)
+        {
+            if (ogImage.Image != null)
+            {
+                Bitmap temp_image = (Bitmap)ogImage.Image;
+                Bitmap negative = new Bitmap(temp_image);
+                int[] intensity = new int[256];
+                histogram.Series.Clear();
+
+                for (int x = 0; x < temp_image.Width; x++)
+                {
+                    for (int y = 0; y < temp_image.Height; y++)
+                    {
+                        Color pixel = temp_image.GetPixel(x, y);
+
+                        int a = pixel.A;
+                        int r = 255 - pixel.R;
+                        int g = 255 - pixel.G;
+                        int b = 255 - pixel.B;
+
+
+                        negative.SetPixel(x, y, Color.FromArgb(a, r, g, b));
+                    }
+                }
+                processedImage.Image = negative;
+                label2.Text = "Negative";
+            }
+            else
+            {
+                string errorMessage = "Please open a pcx file first.";
+                MessageBox.Show(errorMessage);
+            }
+        }
+
+        private void bwButton_Click(object sender, EventArgs e)
+        {
+            if (ogImage.Image != null)
+            {
+                Bitmap temp_image = (Bitmap)ogImage.Image;
+                Bitmap bw = new Bitmap(temp_image);
+                histogram.Series.Clear();
+
+                for (int x = 0; x < temp_image.Width; x++)
+                {
+                    for (int y = 0; y < temp_image.Height; y++)
+                    {
+                        Color pixel = temp_image.GetPixel(x, y);
+
+                        int a = pixel.A;
+                        int r = pixel.R;
+                        int g = pixel.G;
+                        int b = pixel.B;
+                        int intensity = (r + g + b);
+
+                        if(intensity >= slider.Value) // If intensity is higher than threshold
+                        {
+                            bw.SetPixel(x, y, Color.White);
+                        }
+                        else
+                        {
+                            bw.SetPixel(x, y, Color.Black);
+                        }
+                    }
+                }
+                processedImage.Image = bw;
+                label2.Text = "Black/White Thresholding";
+            }
+            else
+            {
+                string errorMessage = "Please open a pcx file first.";
+                MessageBox.Show(errorMessage);
+            }
+        }
+
+        private void slider_Scroll(object sender, EventArgs e)
+        {
+            bwLabel.Text = slider.Value.ToString();
+        }
+
+        private void gammaButton_Click(object sender, EventArgs e)
+        {
+            if (ogImage.Image != null)
+            {
+                Bitmap temp_image = (Bitmap)ogImage.Image;
+                Bitmap gamma_image = new Bitmap(temp_image);
+                histogram.Series.Clear();
+
+                for (int x = 0; x < temp_image.Width; x++)
+                {
+                    for (int y = 0; y < temp_image.Height; y++)
+                    {
+                        Color pixel = temp_image.GetPixel(x, y);
+
+                        int a = pixel.A;
+                        int r = pixel.R;
+                        int g = pixel.G;
+                        int b = pixel.B;
+                        int s = (r + g + b) / 3;
+
+                        int gamma = s ^ slider.Value; // Formula for gamma transformation
+
+                        Color newPixel = Color.FromArgb(r, g, b);
+                        gamma_image.SetPixel(x, y, Color.FromArgb(a, gamma, gamma, gamma));
+                    }
+                }
+                processedImage.Image = gamma_image;
+                label2.Text = "Gamma Transformation";
             }
             else
             {
