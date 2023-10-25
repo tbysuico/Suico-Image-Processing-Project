@@ -26,6 +26,9 @@ namespace Suico_Image_Processing_Project
             {
                 processImage(openFile.FileName);  // Function call for processing image of bitmap
             }
+            processedImage.Image = null; // Clears the processed image box
+            histogram.Series.Clear(); // Clears histogram
+            histogram.Series.Add("Pixels"); // Re-initializes Pixels series for chart
         }
 
         public void processImage(string bmp) // Function for processing data of bitmap
@@ -162,6 +165,120 @@ namespace Suico_Image_Processing_Project
             }
 
             ogImage.Image = temp_image;
+        }
+
+        private void redButton_Click(object sender, EventArgs e) // Function for Red Channel button
+        {
+            Bitmap temp_image = (Bitmap)ogImage.Image;
+            Bitmap redChannel = new Bitmap(256, 256);
+            histogram.Series.Clear(); // Clears histogram
+            histogram.Series.Add("Pixels"); // Re-initializes Pixels series for chart
+            int[] intensity = new int[256];
+
+            if (ogImage.Image != null) // Checks if there is an available image to process
+            {
+                for (int x = 0; x < temp_image.Width; x++) // Iterates through all pixels of the image
+                {
+                    for (int y = 0; y < temp_image.Height; y++)
+                    {
+                        Color pixel = temp_image.GetPixel(x, y); // Takes the color of the pixel at the xth, yth coordinate
+
+                        // Takes the relevant values of the pixel
+                        int a = pixel.A;
+                        int r = pixel.R;
+                        intensity[r]++;
+
+                        redChannel.SetPixel(x, y, Color.FromArgb(a, r, 0, 0)); // Sets all other values to 0 except the relevant color
+                    }
+                }
+                processedImage.Image = redChannel;
+
+                for (int x = 0; x < 256; x++)
+                {
+                    histogram.Series["Pixels"].Points.AddXY(x, intensity[x]);
+                }
+            }
+            else // Prints error message if there is no image available to process
+            {
+                string errorMessage = "Please open a pcx file first.";
+                MessageBox.Show(errorMessage);
+            }
+        }
+
+        private void greenButton_Click(object sender, EventArgs e) // Function for Green Channel button
+        {
+            Bitmap temp_image = (Bitmap)ogImage.Image;
+            Bitmap greenChannel = new Bitmap(256, 256);
+            histogram.Series.Clear(); // Clears histogram
+            histogram.Series.Add("Pixels"); // Re-initializes Pixels series for chart
+            int[] intensity = new int[256];
+
+            if (ogImage.Image != null) // Check
+            {
+                for (int x = 0; x < temp_image.Width; x++)
+                {
+                    for (int y = 0; y < temp_image.Height; y++)
+                    {
+                        Color pixel = temp_image.GetPixel(x, y);
+
+                        int a = pixel.A;
+                        int g = pixel.G;
+                        intensity[g]++;
+
+
+                        greenChannel.SetPixel(x, y, Color.FromArgb(a, 0, g, 0));
+                    }
+                }
+                processedImage.Image = greenChannel;
+
+                for (int x = 0; x < 256; x++)
+                {
+                    histogram.Series["Pixels"].Points.AddXY(x, intensity[x]);
+                }
+            }
+            else
+            {
+                string errorMessage = "Please open a pcx file first.";
+                MessageBox.Show(errorMessage);
+            }
+        }
+
+        private void blueButton_Click(object sender, EventArgs e) // Function for Blue Channel button
+        {
+            Bitmap temp_image = (Bitmap)ogImage.Image;
+            Bitmap blueChannel = new Bitmap(256, 256);
+            histogram.Series.Clear(); // Clears histogram
+            histogram.Series.Add("Pixels"); // Re-initializes Pixels series for chart
+            int[] intensity = new int[256];
+
+            if (ogImage.Image != null)
+            {
+                for (int x = 0; x < temp_image.Width; x++)
+                {
+                    for (int y = 0; y < temp_image.Height; y++)
+                    {
+                        Color pixel = temp_image.GetPixel(x, y);
+
+                        int a = pixel.A;
+                        int b = pixel.B;
+                        intensity[b]++;
+
+
+                        blueChannel.SetPixel(x, y, Color.FromArgb(a, 0, 0, b));
+                    }
+                }
+                processedImage.Image = blueChannel;
+
+                for (int x = 0; x < 256; x++)
+                {
+                    histogram.Series["Pixels"].Points.AddXY(x, intensity[x]);
+                }
+            }
+            else
+            {
+                string errorMessage = "Please open a pcx file first.";
+                MessageBox.Show(errorMessage);
+            }
         }
     }
 }
