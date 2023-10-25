@@ -30,10 +30,10 @@ namespace Suico_Image_Processing_Project
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Title title1 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Title title2 = new System.Windows.Forms.DataVisualization.Charting.Title();
             this.ogImage = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
             this.open = new System.Windows.Forms.Button();
@@ -46,10 +46,17 @@ namespace Suico_Image_Processing_Project
             this.greenButton = new System.Windows.Forms.Button();
             this.blueButton = new System.Windows.Forms.Button();
             this.histogram = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.grayButton = new System.Windows.Forms.Button();
+            this.negativeButton = new System.Windows.Forms.Button();
+            this.bwButton = new System.Windows.Forms.Button();
+            this.slider = new System.Windows.Forms.TrackBar();
+            this.bwLabel = new System.Windows.Forms.Label();
+            this.gammaButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.ogImage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.colorPalette)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.processedImage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.histogram)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.slider)).BeginInit();
             this.SuspendLayout();
             // 
             // ogImage
@@ -151,30 +158,96 @@ namespace Suico_Image_Processing_Project
             // 
             this.histogram.BackColor = System.Drawing.Color.Transparent;
             this.histogram.BorderlineColor = System.Drawing.Color.Transparent;
-            chartArea1.Name = "ChartArea1";
-            this.histogram.ChartAreas.Add(chartArea1);
+            chartArea2.Name = "ChartArea1";
+            this.histogram.ChartAreas.Add(chartArea2);
             this.histogram.IsSoftShadows = false;
-            legend1.Name = "Legend1";
-            this.histogram.Legends.Add(legend1);
-            this.histogram.Location = new System.Drawing.Point(312, 358);
+            legend2.Name = "Legend1";
+            this.histogram.Legends.Add(legend2);
+            this.histogram.Location = new System.Drawing.Point(267, 369);
             this.histogram.Name = "histogram";
             this.histogram.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.EarthTones;
-            series1.ChartArea = "ChartArea1";
-            series1.Legend = "Legend1";
-            series1.Name = "Pixels";
-            this.histogram.Series.Add(series1);
+            series2.ChartArea = "ChartArea1";
+            series2.Legend = "Legend1";
+            series2.Name = "Pixels";
+            this.histogram.Series.Add(series2);
             this.histogram.Size = new System.Drawing.Size(340, 217);
             this.histogram.TabIndex = 16;
             this.histogram.Text = "Histogram";
-            title1.Name = "Pixels";
-            title1.Text = "Histogram";
-            this.histogram.Titles.Add(title1);
+            title2.Name = "Pixels";
+            title2.Text = "Histogram";
+            this.histogram.Titles.Add(title2);
+            // 
+            // grayButton
+            // 
+            this.grayButton.Location = new System.Drawing.Point(648, 147);
+            this.grayButton.Name = "grayButton";
+            this.grayButton.Size = new System.Drawing.Size(106, 23);
+            this.grayButton.TabIndex = 17;
+            this.grayButton.Text = "Grayscale";
+            this.grayButton.UseVisualStyleBackColor = true;
+            this.grayButton.Click += new System.EventHandler(this.grayButton_Click);
+            // 
+            // negativeButton
+            // 
+            this.negativeButton.Location = new System.Drawing.Point(648, 176);
+            this.negativeButton.Name = "negativeButton";
+            this.negativeButton.Size = new System.Drawing.Size(106, 23);
+            this.negativeButton.TabIndex = 18;
+            this.negativeButton.Text = "Negative";
+            this.negativeButton.UseVisualStyleBackColor = true;
+            this.negativeButton.Click += new System.EventHandler(this.negativeButton_Click);
+            // 
+            // bwButton
+            // 
+            this.bwButton.Location = new System.Drawing.Point(648, 205);
+            this.bwButton.Name = "bwButton";
+            this.bwButton.Size = new System.Drawing.Size(106, 23);
+            this.bwButton.TabIndex = 19;
+            this.bwButton.Text = "B/W Thresholding";
+            this.bwButton.UseVisualStyleBackColor = true;
+            this.bwButton.Click += new System.EventHandler(this.bwButton_Click);
+            // 
+            // slider
+            // 
+            this.slider.Location = new System.Drawing.Point(691, 309);
+            this.slider.Maximum = 255;
+            this.slider.Name = "slider";
+            this.slider.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.slider.Size = new System.Drawing.Size(45, 261);
+            this.slider.TabIndex = 20;
+            this.slider.TickFrequency = 10;
+            this.slider.Scroll += new System.EventHandler(this.slider_Scroll);
+            // 
+            // bwLabel
+            // 
+            this.bwLabel.AutoSize = true;
+            this.bwLabel.Location = new System.Drawing.Point(694, 293);
+            this.bwLabel.Name = "bwLabel";
+            this.bwLabel.Size = new System.Drawing.Size(13, 13);
+            this.bwLabel.TabIndex = 22;
+            this.bwLabel.Text = "0";
+            // 
+            // gammaButton
+            // 
+            this.gammaButton.Location = new System.Drawing.Point(648, 234);
+            this.gammaButton.Name = "gammaButton";
+            this.gammaButton.Size = new System.Drawing.Size(106, 23);
+            this.gammaButton.TabIndex = 23;
+            this.gammaButton.Text = "Gamma";
+            this.gammaButton.UseVisualStyleBackColor = true;
+            this.gammaButton.Click += new System.EventHandler(this.gammaButton_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(794, 651);
+            this.Controls.Add(this.gammaButton);
+            this.Controls.Add(this.bwLabel);
+            this.Controls.Add(this.slider);
+            this.Controls.Add(this.bwButton);
+            this.Controls.Add(this.negativeButton);
+            this.Controls.Add(this.grayButton);
             this.Controls.Add(this.histogram);
             this.Controls.Add(this.blueButton);
             this.Controls.Add(this.greenButton);
@@ -192,6 +265,7 @@ namespace Suico_Image_Processing_Project
             ((System.ComponentModel.ISupportInitialize)(this.colorPalette)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.processedImage)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.histogram)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.slider)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -211,6 +285,12 @@ namespace Suico_Image_Processing_Project
         private System.Windows.Forms.Button greenButton;
         private System.Windows.Forms.Button blueButton;
         private System.Windows.Forms.DataVisualization.Charting.Chart histogram;
+        private System.Windows.Forms.Button grayButton;
+        private System.Windows.Forms.Button negativeButton;
+        private System.Windows.Forms.Button bwButton;
+        private System.Windows.Forms.Label bwLabel;
+        public System.Windows.Forms.TrackBar slider;
+        private System.Windows.Forms.Button gammaButton;
     }
 }
 
