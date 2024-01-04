@@ -29,6 +29,8 @@ namespace Suico_Image_Processing_Project
             processedImage.Image = null; // Clears the processed image box
             histogram.Series.Clear(); // Clears histogram
             histogram.Series.Add("Pixels"); // Re-initializes Pixels series for chart
+            imgDeg.Text = null; // Clears the imgDeg combo box
+            label2.Text = "Processed Image";
         }
 
         public void processImage(string bmp) // Function for processing data of bitmap
@@ -287,6 +289,33 @@ namespace Suico_Image_Processing_Project
             }
         }
 
+        public Bitmap grayscale()
+        {
+            Bitmap temp_image = (Bitmap)ogImage.Image;
+            Bitmap gray = new Bitmap(temp_image);
+            int[] intensity = new int[256];
+
+            for (int x = 0; x < temp_image.Width; x++)
+            {
+                for (int y = 0; y < temp_image.Height; y++)
+                {
+                    Color pixel = temp_image.GetPixel(x, y);
+
+                    int a = pixel.A;
+                    int r = pixel.R;
+                    int g = pixel.G;
+                    int b = pixel.B;
+                    int s = (r + g + b) / 3;
+
+                    intensity[s]++;
+
+                    gray.SetPixel(x, y, Color.FromArgb(a, s, s, s));
+                }
+            }
+
+            return gray;
+        }
+
         private void grayButton_Click(object sender, EventArgs e)
         {
             histogram.Series.Clear(); // Clears histogram
@@ -299,33 +328,10 @@ namespace Suico_Image_Processing_Project
             else
             {
                 Bitmap temp_image = (Bitmap)ogImage.Image;
-                Bitmap grayscale = new Bitmap(temp_image);
-                int[] intensity = new int[256];
-
-                for (int x = 0; x < temp_image.Width; x++)
-                {
-                    for (int y = 0; y < temp_image.Height; y++)
-                    {
-                        Color pixel = temp_image.GetPixel(x, y);
-
-                        int a = pixel.A;
-                        int r = pixel.R;
-                        int g = pixel.G;
-                        int b = pixel.B;
-                        int s = (r + g + b) / 3;
-
-                        intensity[s]++;
-
-                        grayscale.SetPixel(x, y, Color.FromArgb(a, s, s, s));
-                    }
-                }
-                processedImage.Image = grayscale;
+                Bitmap gray = grayscale();
+                
+                processedImage.Image = gray;
                 label2.Text = "Grayscale";
-
-                for (int x = 0; x < 256; x++)
-                {
-                    histogram.Series["Pixels"].Points.AddXY(x, intensity[x]);
-                }
             }
         }
 
@@ -939,5 +945,86 @@ namespace Suico_Image_Processing_Project
                 label2.Text = "Gradient Sobel XY";
             }
         }
+        private void imgDegSlider_Scroll(object sender, EventArgs e)
+        {
+            noiseLevel.Text = imgDegSlider.Value.ToString();
+        }
+
+        public Bitmap imgDegradation(string check)
+        {
+            Bitmap gray = grayscale();
+            double proba = (double) imgDegSlider.Value / 100;
+            double threshold = 1 - proba;
+            int numPixels = (int)(proba * gray.Width * gray.Height);
+            Random rnd = new Random();
+
+            if (check == "Salt Noise")
+            {
+                for (int x = 0; x < gray.Width; x++)
+                {
+                    for (int y = 0; y < gray.Height; y++)
+                    {
+                        if (rnd.NextDouble() > threshold)
+                            gray.SetPixel(x, y, Color.White);
+                    }
+                }
+            }
+            else if (check == "Pepper Noise")
+            {
+                for (int x = 0; x < gray.Width; x++)
+                {
+                    for (int y = 0; y < gray.Height; y++)
+                    {
+                        if (rnd.NextDouble() > threshold)
+                            gray.SetPixel(x, y, Color.Black);
+                    }
+                }
+            }
+            else if (check == "Salt and Pepper Noise")
+            {
+                for (int x = 0; x < gray.Width; x++)
+                {
+                    for (int y = 0; y < gray.Height; y++)
+                    {
+                        double num = Math.Round(rnd.NextDouble(),2);
+                        if (num < proba)
+                            gray.SetPixel(x, y, Color.Black);
+                        else if (num > threshold)
+                            gray.SetPixel(x, y, Color.White);
+                    }
+                }
+            }
+
+            return gray;
+        }
+        private void imgDeg_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            histogram.Series.Clear(); // Clears histogram
+            Bitmap result = (Bitmap)ogImage.Image;
+            if (ogImage.Image == null)
+            {
+                string errormessage = "Please open a pcx file first.";
+                MessageBox.Show(errormessage);
+            }
+            else if (imgDeg.Text == "Salt Noise")
+            {
+                result = imgDegradation(imgDeg.Text);
+                processedImage.Image = result;
+                label2.Text = "Salt Noise";
+            }
+            else if (imgDeg.Text == "Pepper Noise")
+            {
+                result = imgDegradation(imgDeg.Text);
+                processedImage.Image = result;
+                label2.Text = "Pepper Noise";
+            }
+            else if (imgDeg.Text == "Salt and Pepper Noise")
+            {
+                result = imgDegradation(imgDeg.Text);
+                processedImage.Image = result;
+                label2.Text = "Salt and Pepper Noise";
+            }
+        }
+
     }
 }
