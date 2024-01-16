@@ -54,6 +54,11 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
+    <Compile Include="Project1g2.cs" />
+    <Compile Include="Project1g3.cs" />
+    <Compile Include="Project1g4.cs" />
+    <Compile Include="Project1g5.cs" />
+    <Compile Include="Project2.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
