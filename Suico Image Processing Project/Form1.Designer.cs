@@ -30,10 +30,10 @@ namespace Suico_Image_Processing_Project
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Title title1 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Title title3 = new System.Windows.Forms.DataVisualization.Charting.Title();
             this.ogImage = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
             this.open = new System.Windows.Forms.Button();
@@ -72,16 +72,18 @@ namespace Suico_Image_Processing_Project
             this.qSlider = new System.Windows.Forms.TrackBar();
             this.qIndex = new System.Windows.Forms.Label();
             this.RLE = new System.Windows.Forms.Button();
-            this.test = new System.Windows.Forms.Label();
             this.videoPlayer = new System.Windows.Forms.Button();
             this.imgSize1 = new System.Windows.Forms.Label();
             this.imgSize2 = new System.Windows.Forms.Label();
             this.pause = new System.Windows.Forms.Button();
             this.play = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.back = new System.Windows.Forms.Button();
+            this.forward = new System.Windows.Forms.Button();
             this.Huffman = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
+            this.videoBox = new System.Windows.Forms.PictureBox();
+            this.opticalFlow = new System.Windows.Forms.Button();
+            this.vidLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.ogImage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.colorPalette)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.processedImage)).BeginInit();
@@ -90,6 +92,7 @@ namespace Suico_Image_Processing_Project
             ((System.ComponentModel.ISupportInitialize)(this.gammaSlider)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.imgDegSlider)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.qSlider)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.videoBox)).BeginInit();
             this.SuspendLayout();
             // 
             // ogImage
@@ -168,7 +171,7 @@ namespace Suico_Image_Processing_Project
             // 
             this.redButton.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.redButton.BackColor = System.Drawing.Color.Red;
-            this.redButton.Location = new System.Drawing.Point(696, 128);
+            this.redButton.Location = new System.Drawing.Point(696, 140);
             this.redButton.Name = "redButton";
             this.redButton.Size = new System.Drawing.Size(30, 30);
             this.redButton.TabIndex = 13;
@@ -179,7 +182,7 @@ namespace Suico_Image_Processing_Project
             // 
             this.greenButton.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.greenButton.BackColor = System.Drawing.Color.Green;
-            this.greenButton.Location = new System.Drawing.Point(734, 128);
+            this.greenButton.Location = new System.Drawing.Point(734, 140);
             this.greenButton.Name = "greenButton";
             this.greenButton.Size = new System.Drawing.Size(30, 30);
             this.greenButton.TabIndex = 14;
@@ -190,7 +193,7 @@ namespace Suico_Image_Processing_Project
             // 
             this.blueButton.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.blueButton.BackColor = System.Drawing.Color.Blue;
-            this.blueButton.Location = new System.Drawing.Point(772, 128);
+            this.blueButton.Location = new System.Drawing.Point(772, 140);
             this.blueButton.Name = "blueButton";
             this.blueButton.Size = new System.Drawing.Size(30, 30);
             this.blueButton.TabIndex = 15;
@@ -202,30 +205,30 @@ namespace Suico_Image_Processing_Project
             this.histogram.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.histogram.BackColor = System.Drawing.Color.Transparent;
             this.histogram.BorderlineColor = System.Drawing.Color.Transparent;
-            chartArea1.Name = "ChartArea1";
-            this.histogram.ChartAreas.Add(chartArea1);
+            chartArea3.Name = "ChartArea1";
+            this.histogram.ChartAreas.Add(chartArea3);
             this.histogram.IsSoftShadows = false;
-            legend1.Name = "Legend1";
-            this.histogram.Legends.Add(legend1);
+            legend3.Name = "Legend1";
+            this.histogram.Legends.Add(legend3);
             this.histogram.Location = new System.Drawing.Point(290, 418);
             this.histogram.Name = "histogram";
             this.histogram.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.EarthTones;
-            series1.ChartArea = "ChartArea1";
-            series1.Legend = "Legend1";
-            series1.Name = "Pixels";
-            this.histogram.Series.Add(series1);
+            series3.ChartArea = "ChartArea1";
+            series3.Legend = "Legend1";
+            series3.Name = "Pixels";
+            this.histogram.Series.Add(series3);
             this.histogram.Size = new System.Drawing.Size(340, 217);
             this.histogram.TabIndex = 16;
             this.histogram.Text = "Histogram";
-            title1.Name = "Pixels";
-            title1.Text = "Histogram";
-            this.histogram.Titles.Add(title1);
+            title3.Name = "Pixels";
+            title3.Text = "Histogram";
+            this.histogram.Titles.Add(title3);
             // 
             // grayButton
             // 
             this.grayButton.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.grayButton.BackColor = System.Drawing.Color.Gray;
-            this.grayButton.Location = new System.Drawing.Point(696, 164);
+            this.grayButton.Location = new System.Drawing.Point(696, 176);
             this.grayButton.Name = "grayButton";
             this.grayButton.Size = new System.Drawing.Size(106, 23);
             this.grayButton.TabIndex = 17;
@@ -235,7 +238,7 @@ namespace Suico_Image_Processing_Project
             // negativeButton
             // 
             this.negativeButton.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.negativeButton.Location = new System.Drawing.Point(696, 211);
+            this.negativeButton.Location = new System.Drawing.Point(696, 223);
             this.negativeButton.Name = "negativeButton";
             this.negativeButton.Size = new System.Drawing.Size(106, 23);
             this.negativeButton.TabIndex = 18;
@@ -280,7 +283,7 @@ namespace Suico_Image_Processing_Project
             // gammaButton
             // 
             this.gammaButton.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.gammaButton.Location = new System.Drawing.Point(696, 242);
+            this.gammaButton.Location = new System.Drawing.Point(696, 254);
             this.gammaButton.Name = "gammaButton";
             this.gammaButton.Size = new System.Drawing.Size(106, 23);
             this.gammaButton.TabIndex = 23;
@@ -291,7 +294,7 @@ namespace Suico_Image_Processing_Project
             // gammaSlider
             // 
             this.gammaSlider.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.gammaSlider.Location = new System.Drawing.Point(695, 286);
+            this.gammaSlider.Location = new System.Drawing.Point(695, 298);
             this.gammaSlider.Name = "gammaSlider";
             this.gammaSlider.Size = new System.Drawing.Size(106, 45);
             this.gammaSlider.TabIndex = 24;
@@ -302,7 +305,7 @@ namespace Suico_Image_Processing_Project
             // 
             this.gammaLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.gammaLabel.AutoSize = true;
-            this.gammaLabel.Location = new System.Drawing.Point(706, 271);
+            this.gammaLabel.Location = new System.Drawing.Point(706, 283);
             this.gammaLabel.Name = "gammaLabel";
             this.gammaLabel.Size = new System.Drawing.Size(84, 13);
             this.gammaLabel.TabIndex = 25;
@@ -311,7 +314,7 @@ namespace Suico_Image_Processing_Project
             // avgButton
             // 
             this.avgButton.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.avgButton.Location = new System.Drawing.Point(696, 336);
+            this.avgButton.Location = new System.Drawing.Point(696, 347);
             this.avgButton.Name = "avgButton";
             this.avgButton.Size = new System.Drawing.Size(106, 23);
             this.avgButton.TabIndex = 26;
@@ -322,7 +325,7 @@ namespace Suico_Image_Processing_Project
             // medianButton
             // 
             this.medianButton.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.medianButton.Location = new System.Drawing.Point(696, 365);
+            this.medianButton.Location = new System.Drawing.Point(696, 376);
             this.medianButton.Name = "medianButton";
             this.medianButton.Size = new System.Drawing.Size(106, 23);
             this.medianButton.TabIndex = 27;
@@ -333,7 +336,7 @@ namespace Suico_Image_Processing_Project
             // highpassButton
             // 
             this.highpassButton.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.highpassButton.Location = new System.Drawing.Point(696, 394);
+            this.highpassButton.Location = new System.Drawing.Point(696, 405);
             this.highpassButton.Name = "highpassButton";
             this.highpassButton.Size = new System.Drawing.Size(106, 23);
             this.highpassButton.TabIndex = 28;
@@ -344,7 +347,7 @@ namespace Suico_Image_Processing_Project
             // unsharpenButton
             // 
             this.unsharpenButton.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.unsharpenButton.Location = new System.Drawing.Point(696, 423);
+            this.unsharpenButton.Location = new System.Drawing.Point(696, 434);
             this.unsharpenButton.Name = "unsharpenButton";
             this.unsharpenButton.Size = new System.Drawing.Size(106, 23);
             this.unsharpenButton.TabIndex = 29;
@@ -355,7 +358,7 @@ namespace Suico_Image_Processing_Project
             // highboostButton
             // 
             this.highboostButton.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.highboostButton.Location = new System.Drawing.Point(696, 452);
+            this.highboostButton.Location = new System.Drawing.Point(696, 463);
             this.highboostButton.Name = "highboostButton";
             this.highboostButton.Size = new System.Drawing.Size(106, 23);
             this.highboostButton.TabIndex = 30;
@@ -366,7 +369,7 @@ namespace Suico_Image_Processing_Project
             // gradientXYButton
             // 
             this.gradientXYButton.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.gradientXYButton.Location = new System.Drawing.Point(914, 349);
+            this.gradientXYButton.Location = new System.Drawing.Point(914, 361);
             this.gradientXYButton.Name = "gradientXYButton";
             this.gradientXYButton.Size = new System.Drawing.Size(30, 20);
             this.gradientXYButton.TabIndex = 38;
@@ -378,7 +381,7 @@ namespace Suico_Image_Processing_Project
             // 
             this.label3.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(866, 333);
+            this.label3.Location = new System.Drawing.Point(866, 345);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(47, 13);
             this.label3.TabIndex = 37;
@@ -387,7 +390,7 @@ namespace Suico_Image_Processing_Project
             // gradientYButton
             // 
             this.gradientYButton.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.gradientYButton.Location = new System.Drawing.Point(876, 349);
+            this.gradientYButton.Location = new System.Drawing.Point(876, 361);
             this.gradientYButton.Name = "gradientYButton";
             this.gradientYButton.Size = new System.Drawing.Size(30, 20);
             this.gradientYButton.TabIndex = 36;
@@ -398,7 +401,7 @@ namespace Suico_Image_Processing_Project
             // gradientXButton
             // 
             this.gradientXButton.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.gradientXButton.Location = new System.Drawing.Point(838, 349);
+            this.gradientXButton.Location = new System.Drawing.Point(838, 361);
             this.gradientXButton.Name = "gradientXButton";
             this.gradientXButton.Size = new System.Drawing.Size(30, 20);
             this.gradientXButton.TabIndex = 35;
@@ -413,10 +416,10 @@ namespace Suico_Image_Processing_Project
             this.imgDeg.Font = new System.Drawing.Font("Segoe UI Symbol", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.imgDeg.FormattingEnabled = true;
             this.imgDeg.Items.AddRange(new object[] {
-            "Salt Noise",
-            "Pepper Noise",
-            "Salt and Pepper Noise"});
-            this.imgDeg.Location = new System.Drawing.Point(837, 138);
+            "Salt and Pepper Noise",
+            "Gaussian Noise",
+            "Rayleigh Noise"});
+            this.imgDeg.Location = new System.Drawing.Point(837, 167);
             this.imgDeg.Name = "imgDeg";
             this.imgDeg.Size = new System.Drawing.Size(107, 21);
             this.imgDeg.TabIndex = 39;
@@ -426,7 +429,7 @@ namespace Suico_Image_Processing_Project
             // 
             this.label4.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(843, 122);
+            this.label4.Location = new System.Drawing.Point(843, 151);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(97, 13);
             this.label4.TabIndex = 40;
@@ -435,7 +438,7 @@ namespace Suico_Image_Processing_Project
             // imgDegSlider
             // 
             this.imgDegSlider.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.imgDegSlider.Location = new System.Drawing.Point(838, 174);
+            this.imgDegSlider.Location = new System.Drawing.Point(838, 203);
             this.imgDegSlider.Name = "imgDegSlider";
             this.imgDegSlider.Size = new System.Drawing.Size(106, 45);
             this.imgDegSlider.TabIndex = 41;
@@ -446,17 +449,17 @@ namespace Suico_Image_Processing_Project
             // 
             this.noiseLevel.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.noiseLevel.AutoSize = true;
-            this.noiseLevel.Location = new System.Drawing.Point(849, 162);
+            this.noiseLevel.Location = new System.Drawing.Point(885, 191);
             this.noiseLevel.Name = "noiseLevel";
-            this.noiseLevel.Size = new System.Drawing.Size(83, 13);
+            this.noiseLevel.Size = new System.Drawing.Size(13, 13);
             this.noiseLevel.TabIndex = 42;
-            this.noiseLevel.Text = "Noise Level: 5%";
+            this.noiseLevel.Text = "5";
             // 
             // label5
             // 
             this.label5.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(845, 226);
+            this.label5.Location = new System.Drawing.Point(845, 238);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(93, 13);
             this.label5.TabIndex = 45;
@@ -472,7 +475,7 @@ namespace Suico_Image_Processing_Project
             "Geometric Mean",
             "Contraharmonic",
             "Median"});
-            this.imgRes.Location = new System.Drawing.Point(838, 242);
+            this.imgRes.Location = new System.Drawing.Point(838, 254);
             this.imgRes.Name = "imgRes";
             this.imgRes.Size = new System.Drawing.Size(107, 21);
             this.imgRes.TabIndex = 44;
@@ -481,7 +484,7 @@ namespace Suico_Image_Processing_Project
             // qSlider
             // 
             this.qSlider.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.qSlider.Location = new System.Drawing.Point(838, 285);
+            this.qSlider.Location = new System.Drawing.Point(838, 297);
             this.qSlider.Maximum = 5;
             this.qSlider.Minimum = -5;
             this.qSlider.Name = "qSlider";
@@ -493,7 +496,7 @@ namespace Suico_Image_Processing_Project
             // 
             this.qIndex.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.qIndex.AutoSize = true;
-            this.qIndex.Location = new System.Drawing.Point(825, 269);
+            this.qIndex.Location = new System.Drawing.Point(825, 281);
             this.qIndex.Name = "qIndex";
             this.qIndex.Size = new System.Drawing.Size(132, 13);
             this.qIndex.TabIndex = 49;
@@ -502,23 +505,13 @@ namespace Suico_Image_Processing_Project
             // RLE
             // 
             this.RLE.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.RLE.Location = new System.Drawing.Point(696, 94);
+            this.RLE.Location = new System.Drawing.Point(696, 98);
             this.RLE.Name = "RLE";
             this.RLE.Size = new System.Drawing.Size(36, 23);
             this.RLE.TabIndex = 50;
             this.RLE.Text = "RLE";
             this.RLE.UseVisualStyleBackColor = true;
             this.RLE.Click += new System.EventHandler(this.RLE_Click);
-            // 
-            // test
-            // 
-            this.test.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.test.AutoSize = true;
-            this.test.Location = new System.Drawing.Point(576, 374);
-            this.test.Name = "test";
-            this.test.Size = new System.Drawing.Size(24, 13);
-            this.test.TabIndex = 51;
-            this.test.Text = "test";
             // 
             // videoPlayer
             // 
@@ -529,6 +522,7 @@ namespace Suico_Image_Processing_Project
             this.videoPlayer.TabIndex = 52;
             this.videoPlayer.Text = "Play a video";
             this.videoPlayer.UseVisualStyleBackColor = true;
+            this.videoPlayer.Click += new System.EventHandler(this.videoPlayer_Click);
             // 
             // imgSize1
             // 
@@ -561,6 +555,7 @@ namespace Suico_Image_Processing_Project
             this.pause.TabIndex = 57;
             this.pause.Text = "pause";
             this.pause.UseVisualStyleBackColor = true;
+            this.pause.Click += new System.EventHandler(this.pause_Click);
             // 
             // play
             // 
@@ -571,31 +566,34 @@ namespace Suico_Image_Processing_Project
             this.play.TabIndex = 58;
             this.play.Text = "play";
             this.play.UseVisualStyleBackColor = true;
+            this.play.Click += new System.EventHandler(this.play_Click);
             // 
-            // button1
+            // back
             // 
-            this.button1.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.button1.Location = new System.Drawing.Point(837, 87);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(50, 23);
-            this.button1.TabIndex = 59;
-            this.button1.Text = "<";
-            this.button1.UseVisualStyleBackColor = true;
+            this.back.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.back.Location = new System.Drawing.Point(837, 89);
+            this.back.Name = "back";
+            this.back.Size = new System.Drawing.Size(50, 23);
+            this.back.TabIndex = 59;
+            this.back.Text = "<";
+            this.back.UseVisualStyleBackColor = true;
+            this.back.Click += new System.EventHandler(this.back_Click);
             // 
-            // button2
+            // forward
             // 
-            this.button2.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.button2.Location = new System.Drawing.Point(893, 87);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(50, 23);
-            this.button2.TabIndex = 60;
-            this.button2.Text = ">";
-            this.button2.UseVisualStyleBackColor = true;
+            this.forward.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.forward.Location = new System.Drawing.Point(893, 89);
+            this.forward.Name = "forward";
+            this.forward.Size = new System.Drawing.Size(50, 23);
+            this.forward.TabIndex = 60;
+            this.forward.Text = ">";
+            this.forward.UseVisualStyleBackColor = true;
+            this.forward.Click += new System.EventHandler(this.forward_Click);
             // 
             // Huffman
             // 
             this.Huffman.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.Huffman.Location = new System.Drawing.Point(747, 94);
+            this.Huffman.Location = new System.Drawing.Point(747, 98);
             this.Huffman.Name = "Huffman";
             this.Huffman.Size = new System.Drawing.Size(55, 23);
             this.Huffman.TabIndex = 61;
@@ -607,27 +605,62 @@ namespace Suico_Image_Processing_Project
             // 
             this.label6.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(699, 78);
+            this.label6.Location = new System.Drawing.Point(699, 82);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(99, 13);
             this.label6.TabIndex = 62;
             this.label6.Text = "Image Compression";
+            // 
+            // videoBox
+            // 
+            this.videoBox.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.videoBox.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.videoBox.Location = new System.Drawing.Point(93, 44);
+            this.videoBox.Name = "videoBox";
+            this.videoBox.Size = new System.Drawing.Size(512, 512);
+            this.videoBox.TabIndex = 63;
+            this.videoBox.TabStop = false;
+            this.videoBox.Visible = false;
+            // 
+            // opticalFlow
+            // 
+            this.opticalFlow.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.opticalFlow.Location = new System.Drawing.Point(837, 115);
+            this.opticalFlow.Name = "opticalFlow";
+            this.opticalFlow.Size = new System.Drawing.Size(106, 23);
+            this.opticalFlow.TabIndex = 64;
+            this.opticalFlow.Text = "Optical Flow";
+            this.opticalFlow.UseVisualStyleBackColor = true;
+            this.opticalFlow.Click += new System.EventHandler(this.opticalFlow_Click);
+            // 
+            // vidLabel
+            // 
+            this.vidLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.vidLabel.AutoSize = true;
+            this.vidLabel.Location = new System.Drawing.Point(90, 28);
+            this.vidLabel.Name = "vidLabel";
+            this.vidLabel.Size = new System.Drawing.Size(115, 13);
+            this.vidLabel.TabIndex = 65;
+            this.vidLabel.Text = "Lucas Kanade Method";
+            this.vidLabel.Visible = false;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1000, 674);
+            this.Controls.Add(this.vidLabel);
+            this.Controls.Add(this.opticalFlow);
+            this.Controls.Add(this.videoBox);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.Huffman);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.forward);
+            this.Controls.Add(this.back);
             this.Controls.Add(this.play);
             this.Controls.Add(this.pause);
             this.Controls.Add(this.imgSize2);
             this.Controls.Add(this.imgSize1);
             this.Controls.Add(this.videoPlayer);
-            this.Controls.Add(this.test);
             this.Controls.Add(this.RLE);
             this.Controls.Add(this.qIndex);
             this.Controls.Add(this.qSlider);
@@ -675,6 +708,7 @@ namespace Suico_Image_Processing_Project
             ((System.ComponentModel.ISupportInitialize)(this.gammaSlider)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.imgDegSlider)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.qSlider)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.videoBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -720,16 +754,18 @@ namespace Suico_Image_Processing_Project
         public System.Windows.Forms.TrackBar qSlider;
         private System.Windows.Forms.Label qIndex;
         private System.Windows.Forms.Button RLE;
-        private System.Windows.Forms.Label test;
         private System.Windows.Forms.Button videoPlayer;
         private System.Windows.Forms.Label imgSize1;
         private System.Windows.Forms.Label imgSize2;
         private System.Windows.Forms.Button pause;
         private System.Windows.Forms.Button play;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button back;
+        private System.Windows.Forms.Button forward;
         private System.Windows.Forms.Button Huffman;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.PictureBox videoBox;
+        private System.Windows.Forms.Button opticalFlow;
+        private System.Windows.Forms.Label vidLabel;
     }
 }
 
