@@ -92,17 +92,18 @@ namespace Suico_Image_Processing_Project
                 {
                     Color pixel = temp_image.GetPixel(x, y);
 
-                    int a = pixel.A;
-                    int r = pixel.R;
-                    int g = pixel.G;
-                    int b = pixel.B;
-                    int s = (r + g + b) / 3;
+                    // Perform gamma transformation on each value
+                    int r = (int)(Math.Pow(pixel.R / 255.0, slider_value) * 255.0);
+                    int g = (int)(Math.Pow(pixel.G / 255.0, slider_value) * 255.0);
+                    int b = (int)(Math.Pow(pixel.B / 255.0, slider_value) * 255.0);
 
-                    int gamma = (int)Math.Pow(s, slider_value); // Formula for gamma transformation
-                    gamma = Math.Max(0, Math.Min(255, gamma));
+                    // Ensure values are within valid range (0-255)
+                    r = Math.Max(0, Math.Min(255, r));
+                    g = Math.Max(0, Math.Min(255, g));
+                    b = Math.Max(0, Math.Min(255, b));
 
                     Color newPixel = Color.FromArgb(r, g, b);
-                    gamma_image.SetPixel(x, y, Color.FromArgb(a, gamma, gamma, gamma));
+                    gamma_image.SetPixel(x, y, newPixel);
                 }
             }
             return gamma_image;
