@@ -14,33 +14,9 @@ namespace Suico_Image_Processing_Project
             Bitmap gray = Project1g4.GetGrayscale(img);
             double proba = (double)slider_value / 100;
             double threshold = 1 - proba;
-            int numPixels = (int)(proba * gray.Width * gray.Height);
             Random rnd = new Random();
-            int[] intensity = new int[256];
 
-            if (check == "Salt Noise")
-            {
-                for (int x = 0; x < gray.Width; x++)
-                {
-                    for (int y = 0; y < gray.Height; y++)
-                    {
-                        if (rnd.NextDouble() > threshold)
-                            gray.SetPixel(x, y, Color.White);
-                    }
-                }
-            }
-            else if (check == "Pepper Noise")
-            {
-                for (int x = 0; x < gray.Width; x++)
-                {
-                    for (int y = 0; y < gray.Height; y++)
-                    {
-                        if (rnd.NextDouble() > threshold)
-                            gray.SetPixel(x, y, Color.Black);
-                    }
-                }
-            }
-            else if (check == "Salt and Pepper Noise")
+            if (check == "Salt and Pepper Noise")
             {
                 for (int x = 0; x < gray.Width; x++)
                 {
@@ -54,8 +30,83 @@ namespace Suico_Image_Processing_Project
                     }
                 }
             }
+            else if(check == "Gaussian Noise")
+            {
+                for (int y = 0; y < gray.Height; y++)
+                {
+                    for (int x = 0; x < gray.Width; x++)
+                    {
+                        Color pixel = gray.GetPixel(x, y);
+
+                        // Get the intensity value (e.g., grayscale)
+                        double intensity = pixel.R;
+
+                        double mean = 0.0;
+                        int stdDev = slider_value * 5;
+
+                        // Generate Gaussian-distributed noise
+                        double noise = GenerateGaussianNoise(rnd, mean, stdDev);
+
+                        // Add the noise to the intensity
+                        double noisyIntensity = intensity + noise;
+
+                        // Clip the values to be within the valid range (0-255)
+                        noisyIntensity = Math.Max(0, Math.Min(255, noisyIntensity));
+
+                        // Set the pixel value in the output image
+                        Color noisyPixel = Color.FromArgb((int)noisyIntensity, (int)noisyIntensity, (int)noisyIntensity);
+                        gray.SetPixel(x, y, noisyPixel);
+                    }
+                }
+            }
+            else if(check == "Rayleigh Noise")
+            {
+                for (int y = 0; y < gray.Height; y++)
+                {
+                    for (int x = 0; x < gray.Width; x++)
+                    {
+                        Color pixel = gray.GetPixel(x, y);
+
+                        // Get the intensity value (e.g., grayscale)
+                        double intensity = pixel.R;
+
+                        int scaleParameter = slider_value * 10;
+
+                        // Generate Rayleigh-distributed noise
+                        double noise = GenerateRayleighNoise(rnd, scaleParameter);
+
+                        // Add the noise to the intensity
+                        double noisyIntensity = intensity + noise;
+
+                        // Clip the values to be within the valid range (0-255)
+                        noisyIntensity = Math.Max(0, Math.Min(255, noisyIntensity));
+
+                        // Set the pixel value in the output image
+                        Color noisyPixel = Color.FromArgb((int)noisyIntensity, (int)noisyIntensity, (int)noisyIntensity);
+                        gray.SetPixel(x, y, noisyPixel);
+                    }
+                }
+            }
 
             return gray;
+        }
+
+        static double GenerateGaussianNoise(Random rand, double mean, double stdDev)
+        {
+            // Box-Muller transform for generating Gaussian distribution
+            double u1 = 1.0 - rand.NextDouble();
+            double u2 = 1.0 - rand.NextDouble();
+            double z = Math.Sqrt(-2.0 * Math.Log(u1)) * Math.Cos(2.0 * Math.PI * u2);
+
+            // Apply mean and standard deviation
+            return mean + stdDev * z;
+        }
+
+        static double GenerateRayleighNoise(Random rand, double scaleParameter)
+        {
+            // Rayleigh distribution formula
+            double u = rand.NextDouble();
+            return scaleParameter * Math.Sqrt(-2.0 * Math.Log(1.0 - u));
         }
 
         public static Bitmap RestoreImage(Bitmap img, int q, string check)
@@ -415,7 +466,7 @@ namespace Suico_Image_Processing_Project
 
             return decodedImg;
         }
-
+      
         public static string ByteArrayToBinaryString(byte[] byteArray)
         {
             StringBuilder binaryStringBuilder = new StringBuilder();

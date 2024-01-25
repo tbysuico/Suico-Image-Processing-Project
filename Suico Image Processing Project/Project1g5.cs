@@ -337,27 +337,10 @@ namespace Suico_Image_Processing_Project
         public static Bitmap GetGradientXY(Bitmap img)
         {
             Bitmap temp_image = new Bitmap(img);
-            Bitmap grayscale = new Bitmap(temp_image);
+            Bitmap grayscale = Project1g4.GetGrayscale(temp_image);
             Bitmap gradientXY = new Bitmap(temp_image);
             Color c1, c2, c3, c4, c5, c6, c7, c8, c9, gradientPixel;
-            int a, r, g, b, s, xValue, yValue, sobel;
-
-            // First, create grayscale of image
-            for (int x = 0; x < temp_image.Width; x++)
-            {
-                for (int y = 0; y < temp_image.Height; y++)
-                {
-                    Color pixel = temp_image.GetPixel(x, y);
-
-                    a = pixel.A;
-                    r = pixel.R;
-                    g = pixel.G;
-                    b = pixel.B;
-                    s = (r + g + b) / 3;
-
-                    grayscale.SetPixel(x, y, Color.FromArgb(a, s, s, s));
-                }
-            }
+            int xValue, yValue, sobel;
 
             // Then take relevant pixels
             for (int x = 0; x < temp_image.Width - 3; x++)
