@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
-using System.Diagnostics;
 using System.Windows.Forms;
 
 namespace Suico_Image_Processing_Project

@@ -3,7 +3,6 @@ using System.Drawing;
 using System.IO;
 using System.Text;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Suico_Image_Processing_Project
 {
