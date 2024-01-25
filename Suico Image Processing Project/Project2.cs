@@ -391,6 +391,82 @@ namespace Suico_Image_Processing_Project
             return frequencies;
         }
 
+        public static string HuffmanEncode (string inputData)
+        {
+            var readPCX = File.ReadAllBytes(inputData); // Seeking to the end of file
+            var tree = new HuffmanTree();
+            var frequencies = getFrequencies(readPCX);
+
+            var huffmanTree = tree.BuildHuffmanTree(frequencies);
+            var huffmanCode = tree.GetHuffmanCode(huffmanTree);
+            string encodedData = tree.EncodeImage(readPCX, huffmanCode);
+            
+            return encodedData;
+        }
+
+        public static Bitmap HuffmanDecode(HuffmanNode root, string encodedData)
+        {
+            List<byte> decoded = new List<byte>();
+            HuffmanNode current = root;
+
+            foreach (var bit in encodedData)
+            {
+                if (bit == '0')
+                    current = current.Left;
+                else if (bit == '1')
+                    current = current.Right;
+
+                if (current.Bytecode.HasValue)
+                {
+                    decoded.Add((byte)current.Bytecode);
+                    current = root;
+                }
+            }
+
+            List<Color> colors = new List<Color>(); // List of colors from image
+
+            for (int x = decoded.Count - 768; x < decoded.Count; x += 3) // Count back 768 to take colors (769 results in out of bounds error)
+            {
+                colors.Add(Color.FromArgb(decoded[x], decoded[x + 1], decoded[x + 2]));
+            }
+            // Initialize vars for constructing image
+            Bitmap decodedImg = new Bitmap(256, 256);
+            Color[] image_colors = new Color[256 * 256];
+            List<byte> pixels = new List<byte>();
+            int index = 128;
+            byte byteDuplicator = 0;
+            byte prefix = 0;
+
+            while (index < decoded.Count) // Iterating through relevant bytes
+            {
+                byte reader = decoded[index++]; // Read next byte in sequence
+                if ((reader & 0xC0) == 0xC0 && index < decoded.Count) // Check if 2-bit
+                {
+                    byteDuplicator = decoded[index++]; // Duplicates byte
+                    prefix = (byte)(reader & 0x3F); // Gets the first 2 relevant bytes
+                }
+                else // Check if 1-bit
+                {
+                    byteDuplicator = reader; // Duplicates byte
+                    prefix = 1;
+                }
+                for (int x = 0; x < prefix; x++)
+                {
+                    pixels.Add(byteDuplicator); // Adds byte to pixel list
+                }
+            }
+
+            for (int i = 0; i < 256 * 256; i++)
+            {
+                image_colors[i] = colors[pixels[i]]; // Setting each color for each pixel in image
+                int y = i / 256; // y-coordinate
+                int x = i - (256 * y); // x-coordinate
+                decodedImg.SetPixel(x, y, image_colors[i]); // Constructing image using acquired variables for RLE
+            }
+
+            return decodedImg;
+        }
+      
         public static string ByteArrayToBinaryString(byte[] byteArray)
         {
             StringBuilder binaryStringBuilder = new StringBuilder();
