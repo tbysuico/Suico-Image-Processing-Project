@@ -423,8 +423,6 @@ namespace Suico_Image_Processing_Project
                 }
             }
 
-
-
             List<Color> colors = new List<Color>(); // List of colors from image
 
             for (int x = decoded.Count - 768; x < decoded.Count; x += 3) // Count back 768 to take colors (769 results in out of bounds error)
@@ -439,7 +437,7 @@ namespace Suico_Image_Processing_Project
             byte byteDuplicator = 0;
             byte prefix = 0;
 
-            while (index < decoded.Count) // Iterating through relevant bytes for RLE
+            while (index < decoded.Count) // Iterating through relevant bytes
             {
                 byte reader = decoded[index++]; // Read next byte in sequence
                 if ((reader & 0xC0) == 0xC0 && index < decoded.Count) // Check if 2-bit
