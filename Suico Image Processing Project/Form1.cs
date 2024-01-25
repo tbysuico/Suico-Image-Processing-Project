@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 using System.IO;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace Suico_Image_Processing_Project
@@ -501,13 +502,17 @@ namespace Suico_Image_Processing_Project
                 imgSize1.Visible = true;
 
                 // Perform Huffman Encoding
-                string huffmanCode = Project2.HuffmanEncode(Globals.imgAddress);
-                processedImage.Image = Globals.newImage;
+                Project2.HuffmanTree tree = new Project2.HuffmanTree();
+                Dictionary<byte?, int> frequencies = Project2.getFrequencies(pcxData);
+                Project2.HuffmanNode huffmanTree = tree.BuildHuffmanTree(frequencies);
+                Dictionary<byte?, string> huffmanCode = tree.GetHuffmanCode(huffmanTree);
+                string encodedData = tree.EncodeImage(pcxData, huffmanCode);
+                processedImage.Image = Project2.HuffmanDecode(huffmanTree, encodedData);
                 label2.Text = "Processed Image";
-                imgSize2.Text = "Image Size : " + huffmanCode.Length.ToString();
+                imgSize2.Text = "Image Size : " + encodedData.Length.ToString();
                 imgSize2.Visible = true;
 
-                float compressionRate = (float)pcxByteString.Length / huffmanCode.Length;
+                float compressionRate = (float)pcxByteString.Length / encodedData.Length;
                 MessageBox.Show("Compression Rate: " + compressionRate.ToString());
             }
         }
