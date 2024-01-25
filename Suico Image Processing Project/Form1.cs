@@ -34,10 +34,27 @@ namespace Suico_Image_Processing_Project
 
         public void nullProject2ui()
         {
-            Globals.noise = true;
-            imgDeg.SelectedItem = null;
-            Globals.noise = true;
-            imgRes.SelectedItem = null;
+            if (Globals.newImage != null)
+                ogImage.Image = Globals.newImage;
+
+            if(imgDeg.SelectedItem != null)
+            {
+                Globals.noise = true;
+                imgDeg.SelectedItem = null;
+            }
+            if(imgRes.SelectedItem != null)
+            {
+                Globals.noise = true;
+                imgRes.SelectedItem = null;
+            }
+            imgDegSlider.Value = 5;
+            noiseLevel.Text = "5";
+            qSlider.Value = 0;
+            qIndex.Text = "Contraharmonic Q-index: 0";
+            noiseLevel.Visible = true;
+            snpLabel.Visible = false;
+            gaussianLabel.Visible = false;
+            rayleighLabel.Visible = false;
         }
 
         private void open_Click(object sender, EventArgs e)
@@ -63,6 +80,7 @@ namespace Suico_Image_Processing_Project
                 label1.Text = "Original Image";
                 label2.Text = "Processed Image";
 
+                vidLabel.Visible = false;
                 Globals.newImages = null;
                 Globals.playImages = null;
                 Globals.playing = false;
@@ -79,6 +97,11 @@ namespace Suico_Image_Processing_Project
             }
             else if (Globals.newImages != null)
             {
+                nullProject2ui();
+                project2Reset();
+                Globals.playing = true;
+                vidLabel.Visible = true;
+                vidLabel.Text = "Red Channel";
                 var redImages = new List<Bitmap>();
 
                 foreach (var image in Globals.newImages)
@@ -89,6 +112,8 @@ namespace Suico_Image_Processing_Project
             }
             else
             {
+                nullProject2ui();
+                project2Reset();
                 histogram.Series.Clear(); // Clears histogram
                 histogram.Series.Add("Pixels"); // Re-initializes Pixels series for chart
                 Bitmap redChannel = Project1g3.GetReds(Globals.newImage);
@@ -105,13 +130,17 @@ namespace Suico_Image_Processing_Project
 
         private void greenButton_Click(object sender, EventArgs e) // Function for Green Channel button
         {
-
             if (ogImage.Image == null && Globals.newImages == null) // Check
             {
                 MessageBox.Show("Please open a pcx file or play a video first.");
             }
             else if (Globals.newImages != null)
             {
+                nullProject2ui();
+                project2Reset();
+                Globals.playing = true;
+                vidLabel.Visible = true;
+                vidLabel.Text = "Green Channel";
                 var greenImages = new List<Bitmap>();
 
                 foreach (var image in Globals.newImages)
@@ -122,6 +151,8 @@ namespace Suico_Image_Processing_Project
             }
             else
             {
+                nullProject2ui();
+                project2Reset();
                 histogram.Series.Clear(); // Clears histogram
                 histogram.Series.Add("Pixels"); // Re-initializes Pixels series for chart
                 Bitmap greenChannel = Project1g3.GetGreens(Globals.newImage);
@@ -138,13 +169,17 @@ namespace Suico_Image_Processing_Project
 
         private void blueButton_Click(object sender, EventArgs e) // Function for Blue Channel button
         {
-
             if (ogImage.Image == null && Globals.newImages == null)
             {
                 MessageBox.Show("Please open a pcx file or play a video first.");
             }
             else if (Globals.newImages != null)
             {
+                nullProject2ui();
+                project2Reset();
+                Globals.playing = true;
+                vidLabel.Visible = true;
+                vidLabel.Text = "Blue Channel";
                 var blueImages = new List<Bitmap>();
 
                 foreach (var image in Globals.newImages)
@@ -155,9 +190,11 @@ namespace Suico_Image_Processing_Project
             }
             else
             {
+                nullProject2ui();
+                project2Reset();
                 histogram.Series.Clear(); // Clears histogram
                 histogram.Series.Add("Pixels"); // Re-initializes Pixels series for chart
-                Bitmap blueChannel = Project1g3.GetReds(Globals.newImage);
+                Bitmap blueChannel = Project1g3.GetBlues(Globals.newImage);
                 int[] intensity = Project1g3.GetHist(blueChannel);
 
                 label2.Text = "Blue Channel";
@@ -178,6 +215,10 @@ namespace Suico_Image_Processing_Project
             }
             else if (Globals.newImages != null)
             {
+                nullProject2ui();
+                Globals.playing = true;
+                vidLabel.Visible = true;
+                vidLabel.Text = "Grayscale";
                 var grayImages = new List<Bitmap>();
 
                 foreach (var image in Globals.newImages)
@@ -188,6 +229,7 @@ namespace Suico_Image_Processing_Project
             }
             else
             {
+                nullProject2ui();
                 histogram.Series.Clear(); // Clears histogram
                 histogram.Series.Add("Pixels"); // Re-initializes Pixels series for chart
                 Bitmap gray = Project1g4.GetGrayscale(Globals.newImage);
@@ -211,6 +253,10 @@ namespace Suico_Image_Processing_Project
             }
             else if (Globals.newImages != null)
             {
+                nullProject2ui();
+                Globals.playing = true;
+                vidLabel.Visible = true;
+                vidLabel.Text = "Negative";
                 var negImages = new List<Bitmap>();
 
                 foreach (var image in Globals.newImages)
@@ -221,6 +267,7 @@ namespace Suico_Image_Processing_Project
             }
             else
             {
+                nullProject2ui();
                 histogram.Series.Clear();
                 processedImage.Image = Project1g4.GetNegative(Globals.newImage);
                 label2.Text = "Negative";
@@ -235,6 +282,10 @@ namespace Suico_Image_Processing_Project
             }
             else if (Globals.newImages != null)
             {
+                nullProject2ui();
+                Globals.playing = true;
+                vidLabel.Visible = true;
+                vidLabel.Text = "Black and White Thresholding";
                 var bwImages = new List<Bitmap>();
 
                 foreach (var image in Globals.newImages)
@@ -245,6 +296,7 @@ namespace Suico_Image_Processing_Project
             }
             else
             {
+                nullProject2ui();
                 histogram.Series.Clear();
                 processedImage.Image = Project1g4.GetBW(Globals.newImage, bwSlider.Value);
                 label2.Text = "Black/White Thresholding";
@@ -269,6 +321,11 @@ namespace Suico_Image_Processing_Project
             }
             else if (Globals.newImages != null)
             {
+                nullProject2ui();
+                project2Reset();
+                Globals.playing = true;
+                vidLabel.Visible = true;
+                vidLabel.Text = "Gamma";
                 var gammaImages = new List<Bitmap>();
 
                 foreach (var image in Globals.newImages)
@@ -279,6 +336,8 @@ namespace Suico_Image_Processing_Project
             }
             else
             {
+                nullProject2ui();
+                project2Reset();
                 histogram.Series.Clear();
                 label2.Text = "Gamma Transformation";
                 processedImage.Image = Project1g4.GetGamma(Globals.newImage, gammaSlider.Value);
@@ -294,6 +353,11 @@ namespace Suico_Image_Processing_Project
             }
             else if (Globals.newImages != null)
             {
+                nullProject2ui();
+                project2Reset();
+                Globals.playing = true;
+                vidLabel.Visible = true;
+                vidLabel.Text = "Averaged";
                 var avgImages = new List<Bitmap>();
 
                 foreach (var image in Globals.newImages)
@@ -304,6 +368,8 @@ namespace Suico_Image_Processing_Project
             }
             else
             {
+                nullProject2ui();
+                project2Reset();
                 histogram.Series.Clear();
                 label2.Text = "Averaged";
                 processedImage.Image = Project1g5.GetAverage(Globals.newImage);
@@ -318,6 +384,11 @@ namespace Suico_Image_Processing_Project
             }
             else if (Globals.newImages != null)
             {
+                nullProject2ui();
+                project2Reset();
+                Globals.playing = true;
+                vidLabel.Visible = true;
+                vidLabel.Text = "Medianized";
                 var medianizedImages = new List<Bitmap>();
 
                 foreach (var image in Globals.newImages)
@@ -328,6 +399,8 @@ namespace Suico_Image_Processing_Project
             }
             else
             {
+                nullProject2ui();
+                project2Reset();
                 histogram.Series.Clear();
                 label2.Text = "Median";
                 processedImage.Image = Project1g5.GetMedian(Globals.newImage);
@@ -342,6 +415,11 @@ namespace Suico_Image_Processing_Project
             }
             else if (Globals.newImages != null)
             {
+                nullProject2ui();
+                project2Reset();
+                Globals.playing = true;
+                vidLabel.Visible = true;
+                vidLabel.Text = "Highpass";
                 var highpassedImages = new List<Bitmap>();
 
                 foreach (var image in Globals.newImages)
@@ -352,6 +430,8 @@ namespace Suico_Image_Processing_Project
             }
             else
             {
+                nullProject2ui();
+                project2Reset();
                 histogram.Series.Clear();
                 label2.Text = "Highpass";
                 processedImage.Image = Project1g5.GetHighpass(Globals.newImage);
@@ -366,6 +446,11 @@ namespace Suico_Image_Processing_Project
             }
             else if (Globals.newImages != null)
             {
+                nullProject2ui();
+                project2Reset();
+                Globals.playing = true;
+                vidLabel.Visible = true;
+                vidLabel.Text = "Unsharpened";
                 var unsharpenedImages = new List<Bitmap>();
 
                 foreach (var image in Globals.newImages)
@@ -376,6 +461,8 @@ namespace Suico_Image_Processing_Project
             }
             else
             {
+                nullProject2ui();
+                project2Reset();
                 histogram.Series.Clear();
                 label2.Text = "Unsharpened";
                 processedImage.Image = Project1g5.Unsharpen(Globals.newImage);
@@ -390,6 +477,11 @@ namespace Suico_Image_Processing_Project
             }
             else if (Globals.newImages != null)
             {
+                nullProject2ui();
+                project2Reset();
+                Globals.playing = true;
+                vidLabel.Visible = true;
+                vidLabel.Text = "Highboost";
                 var highboostedImages = new List<Bitmap>();
 
                 foreach (var image in Globals.newImages)
@@ -400,6 +492,8 @@ namespace Suico_Image_Processing_Project
             }
             else
             {
+                nullProject2ui();
+                project2Reset();
                 histogram.Series.Clear();
                 label2.Text = "Highboost";
                 processedImage.Image = Project1g5.GetHighboost(Globals.newImage);
@@ -414,6 +508,11 @@ namespace Suico_Image_Processing_Project
             }
             else if (Globals.newImages != null)
             {
+                nullProject2ui();
+                project2Reset();
+                Globals.playing = true;
+                vidLabel.Visible = true;
+                vidLabel.Text = "Gradient Sobel X";
                 var gradientXImages = new List<Bitmap>();
 
                 foreach (var image in Globals.newImages)
@@ -424,6 +523,8 @@ namespace Suico_Image_Processing_Project
             }
             else
             {
+                nullProject2ui();
+                project2Reset();
                 histogram.Series.Clear();
                 label2.Text = "Gradient Sobel X";
                 processedImage.Image = Project1g5.GetGradientX(Globals.newImage);
@@ -438,6 +539,11 @@ namespace Suico_Image_Processing_Project
             }
             else if (Globals.newImages != null)
             {
+                nullProject2ui();
+                project2Reset();
+                Globals.playing = true;
+                vidLabel.Visible = true;
+                vidLabel.Text = "Gradient Sobel Y";
                 var gradientYImages = new List<Bitmap>();
 
                 foreach (var image in Globals.newImages)
@@ -448,6 +554,8 @@ namespace Suico_Image_Processing_Project
             }
             else
             {
+                nullProject2ui();
+                project2Reset();
                 histogram.Series.Clear();
                 label2.Text = "Gradient Sobel Y";
                 processedImage.Image = Project1g5.GetGradientY(Globals.newImage);
@@ -462,6 +570,11 @@ namespace Suico_Image_Processing_Project
             }
             else if (Globals.newImages != null)
             {
+                nullProject2ui();
+                project2Reset();
+                Globals.playing = true;
+                vidLabel.Visible = true;
+                vidLabel.Text = "Gradient Sobel XY";
                 var gradientXYImages = new List<Bitmap>();
 
                 foreach (var image in Globals.newImages)
@@ -472,6 +585,8 @@ namespace Suico_Image_Processing_Project
             }
             else
             {
+                nullProject2ui();
+                project2Reset();
                 histogram.Series.Clear();
                 label2.Text = "Gradient Sobel XY";
                 processedImage.Image = Project1g5.GetGradientXY(Globals.newImage);
@@ -483,18 +598,27 @@ namespace Suico_Image_Processing_Project
         {
             if (imgDeg.Text == "Salt and Pepper Noise")
             {
-                noiseLevel.Location = new Point(843, 191);
-                noiseLevel.Text = "Noise Probability: " + imgDegSlider.Value.ToString() + "%";
+                noiseLevel.Visible = false;
+                snpLabel.Visible = true;
+                gaussianLabel.Visible = false;
+                rayleighLabel.Visible = false;
+                snpLabel.Text = "Noise Probability: " + imgDegSlider.Value.ToString() + "%";
             }
             else if (imgDeg.Text == "Gaussian Noise")
             {
-                noiseLevel.Location = new Point(834, 191);
-                noiseLevel.Text = "Standard Deviation: " + (5 * imgDegSlider.Value).ToString();
+                noiseLevel.Visible = false;
+                snpLabel.Visible = false;
+                gaussianLabel.Visible = true;
+                rayleighLabel.Visible = false;
+                gaussianLabel.Text = "Standard Deviation: " + (5 * imgDegSlider.Value).ToString();
             }
             else if (imgDeg.Text == "Rayleigh Noise")
             {
-                noiseLevel.Location = new Point(840, 191);
-                noiseLevel.Text = "Scale Parameter: " + (10 * imgDegSlider.Value).ToString();
+                noiseLevel.Visible = false;
+                snpLabel.Visible = false;
+                gaussianLabel.Visible = false;
+                rayleighLabel.Visible = true;
+                rayleighLabel.Text = "Scale Parameter: " + (10 * imgDegSlider.Value).ToString();
             }
             else
                 noiseLevel.Text = imgDegSlider.Value.ToString();
@@ -524,11 +648,13 @@ namespace Suico_Image_Processing_Project
             }
             else if (Globals.newImages != null)
             {
+                Globals.playing = true;
                 var degImages = new List<Bitmap>();
 
                 foreach (var image in Globals.newImages)
                     degImages.Add(Project2.DegradeImage(image,imgDegSlider.Value, imgDeg.Text));
 
+                vidLabel.Visible = true;
                 vidLabel.Text = "Degraded with " + imgDeg.Text;
                 Globals.playImages = degImages;
                 initializeTimer();
@@ -547,27 +673,33 @@ namespace Suico_Image_Processing_Project
 
             if(imgDeg.Text == "Salt and Pepper Noise")
             {
+                noiseLevel.Visible = false;
+                snpLabel.Visible = true;
+                gaussianLabel.Visible = false;
+                rayleighLabel.Visible = false;
                 label2.Text = "Salt and Pepper Noise";
-                noiseLevel.Location = new Point(843, 191);
-                noiseLevel.Text = "Noise Probability: " + imgDegSlider.Value.ToString() + "%";
             }
             else if (imgDeg.Text == "Gaussian Noise")
             {
+                noiseLevel.Visible = false;
+                snpLabel.Visible = false;
+                gaussianLabel.Visible = true;
+                rayleighLabel.Visible = false;
                 label2.Text = "Gaussian Noise";
-                noiseLevel.Location = new Point(834, 191);
-                noiseLevel.Text = "Standard Deviation: " + (5*imgDegSlider.Value).ToString();
             }
             else if (imgDeg.Text == "Rayleigh Noise")
             {
+                noiseLevel.Visible = false;
+                snpLabel.Visible = false;
+                gaussianLabel.Visible = false;
+                rayleighLabel.Visible = true;
                 label2.Text = "Rayleigh Noise";
-                noiseLevel.Location = new Point(840, 191);
-                noiseLevel.Text = "Scale Parameter: " + (10 * imgDegSlider.Value).ToString();
             }
         }
 
         private void qSlider_Scroll(object sender, EventArgs e)
         {
-            qIndex.Text = "Contraharmonic Q-index: "+qSlider.Value.ToString();
+            qIndex.Text = "Contraharmonic Q-index: " + qSlider.Value.ToString();
         }
 
         private void imgRes_SelectedIndexChanged(object sender, EventArgs e)
@@ -602,6 +734,8 @@ namespace Suico_Image_Processing_Project
             }
             else if (vidLabel.Text.Contains("Degraded"))
             {
+                project2Reset();
+                Globals.playing = true;
                 if ((imgDeg.Text == "Gaussian Noise" || imgDeg.Text == "Salt and Pepper Noise") && qSlider.Value < 0 && imgRes.Text == "Contraharmonic")
                 {
                     MessageBox.Show("Q < 0, unable to restore black noise.");
@@ -618,6 +752,7 @@ namespace Suico_Image_Processing_Project
                     resImages.Add(Project2.RestoreImage(image, qSlider.Value, imgRes.Text));
 
                 Globals.playImages = resImages;
+                vidLabel.Visible = true;
                 vidLabel.Text = "Restored";
                 initializeTimer();
             }
@@ -625,12 +760,12 @@ namespace Suico_Image_Processing_Project
             {
                 project2Reset();
 
-                if (imgDeg.Text == "Pepper Noise" && qSlider.Value < 0)
+                if ((imgDeg.Text == "Salt & Pepper Noise" || imgDeg.Text == "Gaussian Noise") && qSlider.Value < 0)
                 {
                     MessageBox.Show("Q < 0, unable to restore pepper noise.");
                     return;
                 }
-                else if (imgDeg.Text == "Salt Noise" && qSlider.Value > 0)
+                else if ((imgDeg.Text == "Salt & Pepper Noise" || imgDeg.Text == "Gaussian Noise") && qSlider.Value > 0)
                 {
                     MessageBox.Show("Q > 0, unable to restore salt noise.");
                     return;
@@ -660,12 +795,15 @@ namespace Suico_Image_Processing_Project
             }
             else
             {
+                nullProject2ui();
                 setup("img");
                 string inputFilePath = Globals.imgAddress;
                 
                 // Read PCX file
                 byte[] pcxData = File.ReadAllBytes(inputFilePath);
                 string pcxByteString = Project2.ByteArrayToBinaryString(pcxData);
+                label1.Text = "Original Image";
+                ogImage.Image = Globals.newImage;
                 imgSize1.Text = "Image size (in binary): " + pcxByteString.Length.ToString();
                 imgSize1.Visible = true;
 
@@ -691,12 +829,15 @@ namespace Suico_Image_Processing_Project
             }
             else
             {
+                nullProject2ui();
                 setup("img");
                 string inputFilePath = Globals.imgAddress;
 
                 // Read PCX file
                 byte[] pcxData = File.ReadAllBytes(inputFilePath);
                 string pcxByteString = Project2.ByteArrayToBinaryString(pcxData);
+                label1.Text = "Original Image";
+                ogImage.Image = Globals.newImage;
                 imgSize1.Text = "Image size (in binary): " + pcxByteString.Length.ToString();
                 imgSize1.Visible = true;
 
@@ -754,9 +895,11 @@ namespace Suico_Image_Processing_Project
             }
         }
 
+        // Final Project
         private void videoPlayer_Click(object sender, EventArgs e)
         {
             setup("vid");
+            nullProject2ui();
             string folderPath = @"C:\Acad Files\CMSC 162 Cinmayii\PCX Files\motion";
             Globals.playing = true;
             var images = new List<Bitmap>();
@@ -874,6 +1017,7 @@ namespace Suico_Image_Processing_Project
             else
             {
                 setup("vid");
+                Globals.playing = true;
                 vidLabel.Visible = true;
                 string folderPath = @"C:\Acad Files\CMSC 162 Cinmayii\PCX Files\motion";
                 var imagePaths = new List<string>(Directory.GetFiles(folderPath, "*.tiff"));

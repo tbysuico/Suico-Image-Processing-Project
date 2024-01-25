@@ -30,9 +30,9 @@ namespace Suico_Image_Processing_Project
                 // Normalize the optical flow values for visualization
                 float maxFlow = Math.Max(opticalFlowU.Cast<float>().Max(), opticalFlowV.Cast<float>().Max());
                 float scale = 255.0f / maxFlow;
-                for (int y = 0; y < processBmp.Height; y++)
+                for (int x = 0; x < processBmp.Width; x++)
                 {
-                    for (int x = 0; x < processBmp.Width; x++)
+                    for (int y = 0; y < processBmp.Height; y++)
                     {
                         // Scale the optical flow values to the range [0, 255]
                         int red = (int)(opticalFlowU[x, y] * scale);

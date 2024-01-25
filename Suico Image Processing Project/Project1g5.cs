@@ -190,40 +190,76 @@ namespace Suico_Image_Processing_Project
         {
             Bitmap temp_image = new Bitmap(img);
             Bitmap grayscale = Project1g4.GetGrayscale(temp_image);
-            Bitmap highboost = new Bitmap(temp_image);
-            Color c1, c2, c3, c4, c5, c6, c7, c8, c9, hbPixel;
 
-            int boostFactor = 2, ogPixel, newPixel, edges, corners, center;
+            double enhancementFactor = 1.5;
+            double[,] laplacian = {{0, -1, 0},
+                                    {-1, 4, -1},
+                                    {0, -1, 0}};
+
+            Bitmap laplacianImage = ApplyFilter(grayscale, laplacian);
+            Bitmap highboost = new Bitmap(temp_image);
 
             for (int x = 0; x < temp_image.Width - 3; x++)
             {
                 for (int y = 0; y < temp_image.Height - 3; y++)
                 {
-                    ogPixel = 0;
+                    Color ogPixel = img.GetPixel(x, y);
+                    Color lapPixel = laplacianImage.GetPixel(x, y);
 
-                    c1 = grayscale.GetPixel(x, y);
-                    c2 = grayscale.GetPixel(x + 1, y);
-                    c3 = grayscale.GetPixel(x + 2, y);
-                    c4 = grayscale.GetPixel(x, y + 1);
-                    c5 = grayscale.GetPixel(x + 1, y + 1);
-                    c6 = grayscale.GetPixel(x + 2, y + 1);
-                    c7 = grayscale.GetPixel(x, y + 2);
-                    c8 = grayscale.GetPixel(x + 1, y + 2);
-                    c9 = grayscale.GetPixel(x + 2, y + 2);
+                    // Calculate the high-boost filtered pixel values
+                    int r = (int)(ogPixel.R + enhancementFactor * (ogPixel.R - lapPixel.R));
+                    int g = (int)(ogPixel.G + enhancementFactor * (ogPixel.G - lapPixel.G));
+                    int b = (int)(ogPixel.B + enhancementFactor * (ogPixel.B - lapPixel.B));
 
-                    // Highboost filter used is 0, -1, 0, -1, boostFactor + 6, -1, 0, -1, 0
-                    edges = (c2.R + c4.R + c6.R + c8.R) * (-1);
-                    corners = (c1.R + c3.R + c7.R + c9.R) * 0;
-                    center = (boostFactor + 6) * c5.R;
-                    newPixel = ogPixel + edges + corners + center;
-                    newPixel = Math.Max(0, Math.Min(255, newPixel));
+                    r = Math.Max(0, Math.Min(255, r));
+                    g = Math.Max(0, Math.Min(255, g));
+                    b = Math.Max(0, Math.Min(255, b));
 
-                    hbPixel = Color.FromArgb(newPixel, newPixel, newPixel);
-                    highboost.SetPixel(x, y, hbPixel);
+                    Color newPixel = Color.FromArgb(r, g, b);
+                    highboost.SetPixel(x, y, newPixel);
                 }
             }
 
             return highboost;
+        }
+
+        static Bitmap ApplyFilter(Bitmap img, double[,] filter)
+        {
+            Bitmap outputImage = new Bitmap(img.Width, img.Height);
+
+            int filterSize = filter.GetLength(0);
+            int filterRadius = filterSize / 2;
+
+            for (int x = filterRadius; x < img.Width - filterRadius; x++)
+            {
+                for (int y = filterRadius; y < img.Height - filterRadius; y++)
+                {
+                    double resultRed = 0.0;
+                    double resultGreen = 0.0;
+                    double resultBlue = 0.0;
+
+                    for (int i = 0; i < filterSize; i++)
+                    {
+                        for (int j = 0; j < filterSize; j++)
+                        {
+                            Color pixel = img.GetPixel(x - filterRadius + i, y - filterRadius + j);
+                            resultRed += pixel.R * filter[i, j];
+                            resultGreen += pixel.G * filter[i, j];
+                            resultBlue += pixel.B * filter[i, j];
+                        }
+                    }
+
+                    // Ensure values to be within range
+                    int r = Math.Max(0, Math.Min(255, (int)resultRed));
+                    int g = Math.Max(0, Math.Min(255, (int)resultGreen));
+                    int b = Math.Max(0, Math.Min(255, (int)resultBlue));
+
+                    Color newPixel = Color.FromArgb(r, g, b);
+                    outputImage.SetPixel(x, y, newPixel);
+                }
+            }
+
+            return outputImage;
         }
 
         public static Bitmap GetGradientX(Bitmap img)

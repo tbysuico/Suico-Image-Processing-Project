@@ -84,6 +84,9 @@ namespace Suico_Image_Processing_Project
             this.videoBox = new System.Windows.Forms.PictureBox();
             this.opticalFlow = new System.Windows.Forms.Button();
             this.vidLabel = new System.Windows.Forms.Label();
+            this.snpLabel = new System.Windows.Forms.Label();
+            this.gaussianLabel = new System.Windows.Forms.Label();
+            this.rayleighLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.ogImage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.colorPalette)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.processedImage)).BeginInit();
@@ -644,11 +647,47 @@ namespace Suico_Image_Processing_Project
             this.vidLabel.Text = "Lucas Kanade Method";
             this.vidLabel.Visible = false;
             // 
+            // snpLabel
+            // 
+            this.snpLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.snpLabel.AutoSize = true;
+            this.snpLabel.Location = new System.Drawing.Point(840, 191);
+            this.snpLabel.Name = "snpLabel";
+            this.snpLabel.Size = new System.Drawing.Size(105, 13);
+            this.snpLabel.TabIndex = 66;
+            this.snpLabel.Text = "Noise Probability: 5%";
+            this.snpLabel.Visible = false;
+            // 
+            // gaussianLabel
+            // 
+            this.gaussianLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.gaussianLabel.AutoSize = true;
+            this.gaussianLabel.Location = new System.Drawing.Point(833, 191);
+            this.gaussianLabel.Name = "gaussianLabel";
+            this.gaussianLabel.Size = new System.Drawing.Size(116, 13);
+            this.gaussianLabel.TabIndex = 67;
+            this.gaussianLabel.Text = "Standard Deviation: 25";
+            this.gaussianLabel.Visible = false;
+            // 
+            // rayleighLabel
+            // 
+            this.rayleighLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.rayleighLabel.AutoSize = true;
+            this.rayleighLabel.Location = new System.Drawing.Point(840, 191);
+            this.rayleighLabel.Name = "rayleighLabel";
+            this.rayleighLabel.Size = new System.Drawing.Size(103, 13);
+            this.rayleighLabel.TabIndex = 68;
+            this.rayleighLabel.Text = "Scale Parameter: 50";
+            this.rayleighLabel.Visible = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1000, 674);
+            this.Controls.Add(this.rayleighLabel);
+            this.Controls.Add(this.gaussianLabel);
+            this.Controls.Add(this.snpLabel);
             this.Controls.Add(this.vidLabel);
             this.Controls.Add(this.opticalFlow);
             this.Controls.Add(this.videoBox);
@@ -766,6 +805,9 @@ namespace Suico_Image_Processing_Project
         private System.Windows.Forms.PictureBox videoBox;
         private System.Windows.Forms.Button opticalFlow;
         private System.Windows.Forms.Label vidLabel;
+        private System.Windows.Forms.Label snpLabel;
+        private System.Windows.Forms.Label gaussianLabel;
+        private System.Windows.Forms.Label rayleighLabel;
     }
 }
 
